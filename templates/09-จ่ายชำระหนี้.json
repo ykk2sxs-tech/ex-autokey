@@ -1,0 +1,75 @@
+{
+  "format": "ex-autokey-template",
+  "version": 1,
+  "name": "จ่ายชำระหนี้",
+  "description": "จ่ายชำระหนี้ 1 ใบสำคัญจ่ายตัดได้หลายใบรับสินค้า · ตัวอย่างเริ่มต้น: ลำดับช่องและปุ่มต้องปรับให้ตรงกับหน้าจอ Express ของคุณก่อนใช้งานจริง",
+  "window_title": "Express",
+  "group_by": "เลขที่ใบสำคัญจ่าย",
+  "settings": {
+    "key_delay_ms": 30,
+    "step_delay_ms": 150,
+    "doc_delay_ms": 1000,
+    "start_delay_s": 3,
+    "input_mode": "unicode"
+  },
+  "header": [
+    {
+      "kind": "field",
+      "column": "เลขที่ใบสำคัญจ่าย",
+      "format": {
+        "type": "text"
+      },
+      "then": "{ENTER}",
+      "required": true
+    },
+    {
+      "kind": "field",
+      "column": "วันที่",
+      "format": {
+        "type": "date",
+        "pattern": "dd/mm/yy",
+        "era": "BE"
+      },
+      "then": "{ENTER}",
+      "required": true
+    },
+    {
+      "kind": "field",
+      "column": "รหัสผู้จำหน่าย",
+      "format": {
+        "type": "text"
+      },
+      "then": "{ENTER}",
+      "required": true
+    }
+  ],
+  "lines": [
+    {
+      "kind": "field",
+      "column": "เลขที่ใบรับสินค้า",
+      "format": {
+        "type": "text"
+      },
+      "then": "{ENTER}",
+      "required": true,
+      "note": "เอกสารที่จ่ายชำระ"
+    },
+    {
+      "kind": "field",
+      "column": "ยอดจ่ายชำระ",
+      "format": {
+        "type": "number",
+        "decimals": 2,
+        "total": true
+      },
+      "then": "{ENTER}",
+      "required": true
+    }
+  ],
+  "footer": [
+    {
+      "kind": "pause",
+      "value": "เลือกวิธีจ่ายเงิน (เงินสด/เช็ค/โอน) ตรวจยอดแล้วกดบันทึกใน Express เอง จากนั้นกด 'ทำต่อ'"
+    }
+  ]
+}

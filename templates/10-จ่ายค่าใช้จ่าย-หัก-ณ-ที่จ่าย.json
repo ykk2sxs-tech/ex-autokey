@@ -1,0 +1,95 @@
+{
+  "format": "ex-autokey-template",
+  "version": 1,
+  "name": "จ่ายค่าใช้จ่าย (หัก ณ ที่จ่าย)",
+  "description": "บันทึกค่าใช้จ่ายและภาษีหัก ณ ที่จ่าย เช่น ค่าบริการ 3% ค่าเช่า 5% ค่าโฆษณา 2% ค่าขนส่ง 1% · ตัวอย่างเริ่มต้น: ลำดับช่องและปุ่มต้องปรับให้ตรงกับหน้าจอ Express ของคุณก่อนใช้งานจริง",
+  "window_title": "Express",
+  "group_by": "เลขที่",
+  "settings": {
+    "key_delay_ms": 30,
+    "step_delay_ms": 150,
+    "doc_delay_ms": 1000,
+    "start_delay_s": 3,
+    "input_mode": "unicode"
+  },
+  "header": [
+    {
+      "kind": "field",
+      "column": "เลขที่",
+      "format": {
+        "type": "text"
+      },
+      "then": "{ENTER}",
+      "required": true,
+      "note": "เลขที่เอกสาร"
+    },
+    {
+      "kind": "field",
+      "column": "วันที่",
+      "format": {
+        "type": "date",
+        "pattern": "dd/mm/yy",
+        "era": "BE"
+      },
+      "then": "{ENTER}",
+      "required": true
+    },
+    {
+      "kind": "field",
+      "column": "รหัสผู้รับเงิน",
+      "format": {
+        "type": "text"
+      },
+      "then": "{ENTER}",
+      "required": true
+    }
+  ],
+  "lines": [
+    {
+      "kind": "field",
+      "column": "รหัสค่าใช้จ่าย",
+      "format": {
+        "type": "text"
+      },
+      "then": "{ENTER}",
+      "required": true
+    },
+    {
+      "kind": "field",
+      "column": "รายละเอียด",
+      "format": {
+        "type": "text"
+      },
+      "then": "{ENTER}"
+    },
+    {
+      "kind": "field",
+      "column": "จำนวนเงิน",
+      "format": {
+        "type": "number",
+        "decimals": 2,
+        "total": true
+      },
+      "then": "{ENTER}",
+      "required": true,
+      "note": "ยอดก่อน VAT"
+    }
+  ],
+  "footer": [
+    {
+      "kind": "field",
+      "column": "อัตราหัก ณ ที่จ่าย",
+      "format": {
+        "type": "number",
+        "decimals": 0
+      },
+      "then": "{ENTER}",
+      "required": true,
+      "note": "อัตราภาษีหัก ณ ที่จ่าย (%)"
+    },
+    {
+      "kind": "pause",
+      "value": "ตรวจประเภทเงินได้และยอดภาษีหัก ณ ที่จ่ายใน Express แล้วกดบันทึกเอง จากนั้นกด 'ทำต่อ'"
+    }
+  ]
+}
