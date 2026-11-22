@@ -27,8 +27,8 @@ def app():
 
 def test_load_sample_and_check(app):
     app.pages["data"].load(os.path.join(ROOT, "samples", "01-ขายเงินสด.csv"))
-    names = [t.name for t in app.templates]
-    app.select_template(names.index("ขายเงินสด"))
+    files = [os.path.basename(t.path) for t in app.templates]
+    app.select_template(files.index("01-ขายเงินสด.json"))
     for page in ("template", "run", "data"):
         app.show_page(page)
     plan = app.pages["run"].check()

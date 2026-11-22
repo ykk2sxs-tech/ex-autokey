@@ -126,13 +126,19 @@ class Template:
                 yield sec, idx, step
 
     def columns_used(self) -> list[str]:
-        """คอลัมน์ที่เทมเพลตต้องใช้ เรียงตามลำดับที่ปรากฏ"""
+        """คอลัมน์ที่เทมเพลตต้องใช้ เรียงตามลำดับที่ปรากฏ (รวม {คอลัมน์} ในข้อความหยุดรอผู้ใช้)"""
         cols: list[str] = []
         if self.group_by:
             cols.append(self.group_by)
         for _, _, step in self.all_steps():
-            if step.kind == "field" and step.column and step.column not in cols:
-                cols.append(step.column)
+            names: list[str] = []
+            if step.kind == "field" and step.column:
+                names = [step.column]
+            elif step.kind == "pause":
+                names = placeholders(step.value)
+            for c in names:
+                if c not in cols:
+                    cols.append(c)
         return cols
 
     def to_dict(self) -> dict:
@@ -182,6 +188,25 @@ class Template:
 
     def copy(self) -> "Template":
         return Template.from_dict(json.loads(json.dumps(self.to_dict())))
+
+
+_PLACEHOLDER = re.compile(r"\{([^{}]+)\}")
+
+
+def placeholders(text: str) -> list[str]:
+    """ชื่อคอลัมน์ที่อ้างถึงในข้อความ เช่น "เลือกบิล {เลขที่ใบกำกับ}" -> ["เลขที่ใบกำกับ"]"""
+    return [m.strip() for m in _PLACEHOLDER.findall(text or "") if m.strip()]
+
+
+def fill_placeholders(text: str, values: dict) -> str:
+    def repl(m: re.Match) -> str:
+        key = m.group(1).strip()
+        if key not in values:
+            return m.group(0)
+        v = values[key]
+        return "" if v is None else str(v).strip()
+
+    return _PLACEHOLDER.sub(repl, text or "")
 
 
 def safe_filename(name: str) -> str:

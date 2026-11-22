@@ -1,8 +1,8 @@
 {
   "format": "ex-autokey-template",
   "version": 1,
-  "name": "ขายเงินเชื่อ",
-  "description": "ขายเงินเชื่อ (ไม่ระบุคลังสินค้า) · ตัวอย่างเริ่มต้น: ลำดับช่องและปุ่มต้องปรับให้ตรงกับหน้าจอ Express ของคุณก่อนใช้งานจริง",
+  "name": "ขายเงินเชื่อ (IV)",
+  "description": "ขายเงินเชื่อ ไม่ระบุคลัง (ใช้คลังตั้งต้นของ Express) · ลำดับปุ่มถอดจากคลิปตัวอย่าง (docs/express-keyflows.md) ทดลองทีละเอกสารก่อนใช้จริง",
   "window_title": "Express",
   "group_by": "เลขที่",
   "settings": {
@@ -13,6 +13,11 @@
     "input_mode": "unicode"
   },
   "header": [
+    {
+      "kind": "keys",
+      "value": "%a{ENTER}",
+      "note": "Alt+A เพิ่มเอกสารใหม่ แล้ว Enter ผ่านช่องแผนก"
+    },
     {
       "kind": "field",
       "column": "เลขที่",
@@ -40,8 +45,18 @@
       "format": {
         "type": "text"
       },
-      "then": "{ENTER}",
-      "required": true
+      "then": "{ENTER 4}",
+      "required": true,
+      "note": "แล้ว Enter 4 ครั้ง: Bill to, สาขา, ใบสั่งขาย → อ้างอิง"
+    },
+    {
+      "kind": "field",
+      "column": "อ้างอิง",
+      "format": {
+        "type": "text"
+      },
+      "then": "{ENTER 12}",
+      "note": "แล้ว Enter 12 ครั้ง: เครดิต, ครบกำหนด, พนักงานขาย, เขตการขาย, ขนส่งโดย, สถานที่ส่งของ, หักส่วนลด, หักเงินมัดจำ ×2, VAT ×2 → ตารางรายการ"
     }
   ],
   "lines": [
@@ -51,8 +66,9 @@
       "format": {
         "type": "text"
       },
-      "then": "{ENTER}",
-      "required": true
+      "then": "{ENTER 2}",
+      "required": true,
+      "note": "แล้ว Enter 2 ครั้ง ผ่านคลัง → จำนวน"
     },
     {
       "kind": "field",
@@ -84,13 +100,18 @@
         "total": true
       },
       "then": "{ENTER}",
-      "note": "ส่วนลดต่อรายการ (ว่างได้)"
+      "note": "ส่วนลดต่อรายการ (ว่างได้) แล้ว Enter → บรรทัดถัดไป"
     }
   ],
   "footer": [
     {
       "kind": "pause",
-      "value": "ตรวจหน้าจอและยอดรวมใน Express แล้วกดบันทึกเอง จากนั้นกด 'ทำต่อ' (ทดสอบผ่านแล้วค่อยเปลี่ยนขั้นตอนนี้เป็นปุ่มบันทึกจริงของ Express)"
+      "value": "ตรวจหน้าจอ Express ก่อนบันทึก แล้วกด 'ทำต่อ' (โปรแกรมจะกด Esc เพื่อบันทึก) ถ้าผิดให้กดหยุด แล้วแก้ใน Express เอง"
+    },
+    {
+      "kind": "keys",
+      "value": "{ESC}",
+      "note": "Esc ที่บรรทัดว่าง = จบรายการและบันทึกเอกสาร"
     }
   ]
 }

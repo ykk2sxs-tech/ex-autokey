@@ -195,8 +195,9 @@ class StepDialog(tk.Toplevel):
         self.value = tk.StringVar(value=self.step.value or "ตรวจหน้าจอ Express แล้วกด 'ทำต่อ'")
         self._entry("ข้อความแจ้งผู้ใช้", self.value, width=50)
         ttk.Label(self.body, style="CardMuted.TLabel", wraplength=520, justify="left",
-                  text="โปรแกรมจะหยุดรอตรงนี้ทุกเอกสาร ผู้ใช้ทำงานใน Express เอง (เช่น ตรวจยอดแล้วกดบันทึก) "
-                       "แล้วกด 'ทำต่อ' ในหน้าจอ EX-AutoKey เพื่อคีย์ต่อ").grid(
+                  text="โปรแกรมจะหยุดรอตรงนี้ ผู้ใช้ทำงานใน Express เอง (เช่น ตรวจยอด เลือกบิล) "
+                       "แล้วกด 'ทำต่อ' ในหน้าจอ EX-AutoKey เพื่อคีย์ต่อ\n"
+                       "ใส่ {ชื่อคอลัมน์} ในข้อความเพื่อแสดงค่าจากไฟล์ เช่น \"เลือกบิล {เลขที่ใบกำกับ}\"").grid(
             row=self.row, column=0, columnspan=3, sticky="w", pady=(4, 0))
         self.row += 1
 

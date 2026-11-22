@@ -6,7 +6,7 @@ import pytest
 
 from exautokey.backends import RecordingBackend
 from exautokey.data import Row, Table
-from exautokey.engine import Runner, build_plan, render_preview, write_log
+from exautokey.engine import PauseHere, Runner, build_plan, render_preview, write_log
 from exautokey.template import Settings, Step, Template
 
 DATE = {"type": "date", "pattern": "dd/mm/yy", "era": "BE"}
@@ -273,3 +273,17 @@ def test_plan_with_errors_cannot_run():
     plan = build_plan(tmpl(), table([["A1", "bad", "P", "1", "1"]]))
     with pytest.raises(ValueError):
         Runner(plan, RecordingBackend()).run()
+
+
+def test_pause_placeholders_filled_per_row():
+    t = tmpl()
+    t.lines = [Step("pause", value="เลือกบิล {สินค้า} ยอด {ราคา} {ไม่มีคอลัมน์}")]
+    t.footer = []
+    plan = build_plan(t, table(ROWS))
+    assert "ไม่มีคอลัมน์" in " ".join(i.message for i in plan.errors)
+    t.lines = [Step("pause", value="เลือกบิล {สินค้า} ยอด {ราคา}")]
+    plan = build_plan(t, table(ROWS))
+    assert plan.ok, plan.issues
+    msgs = [a.message for d in plan.docs for a in d.actions if isinstance(a, PauseHere)]
+    assert msgs == ["เลือกบิล P1 ยอด 1,500", "เลือกบิล P2 ยอด 99.995", "เลือกบิล P1 ยอด 10"]
+    assert "สินค้า" in t.columns_used() and "ราคา" in t.columns_used()

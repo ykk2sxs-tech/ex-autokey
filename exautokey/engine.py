@@ -14,7 +14,7 @@ from .backends import Backend, BackendError
 from .data import Row, Table
 from .formats import FormatError, apply_format, is_empty, to_text
 from .keyspec import KeyPress, KeySpecError, TypeText, Wait, parse_keys
-from .template import SECTIONS, Step, Template
+from .template import SECTIONS, Step, Template, fill_placeholders
 
 SECTION_SHORT = {"header": "หัว", "lines": "รายการ", "footer": "ท้าย"}
 FORBIDDEN_CHARS = {"\r": "ขึ้นบรรทัดใหม่", "\n": "ขึ้นบรรทัดใหม่", "\t": "Tab"}
@@ -91,10 +91,11 @@ class Plan:
 
 
 def _step_title(step: Step) -> str:
+    if step.kind == "field":
+        col = step.column or "(ยังไม่เลือกคอลัมน์)"
+        return f"{col} · {step.note}" if step.note else col
     if step.note:
         return step.note
-    if step.kind == "field":
-        return step.column or "(ยังไม่เลือกคอลัมน์)"
     if step.kind == "text":
         return f'ข้อความ "{step.value}"'
     if step.kind == "keys":
@@ -210,7 +211,8 @@ def _compile_step(sec: str, idx: int, step: Step, row: Row, doc_key: str,
     elif step.kind == "wait":
         acts.append(Wait(step.ms))
     elif step.kind == "pause":
-        acts.append(PauseHere(step.value or "ตรวจหน้าจอ Express แล้วกด 'ทำต่อ'"))
+        values = {k: to_text(v) for k, v in row.values.items()}
+        acts.append(PauseHere(fill_placeholders(step.value, values) or "ตรวจหน้าจอ Express แล้วกด 'ทำต่อ'"))
     return acts
 
 

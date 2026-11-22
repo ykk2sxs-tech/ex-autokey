@@ -1,8 +1,8 @@
 {
   "format": "ex-autokey-template",
   "version": 1,
-  "name": "จ่ายชำระหนี้",
-  "description": "จ่ายชำระหนี้ 1 ใบสำคัญจ่ายตัดได้หลายใบรับสินค้า · ตัวอย่างเริ่มต้น: ลำดับช่องและปุ่มต้องปรับให้ตรงกับหน้าจอ Express ของคุณก่อนใช้งานจริง",
+  "name": "จ่ายชำระหนี้ (PS)",
+  "description": "คีย์หัวใบจ่ายเงินให้ แล้วหยุดให้เลือกบิลและวิธีจ่ายเงินใน Express เอง · ลำดับปุ่มถอดจากคลิปตัวอย่าง (docs/express-keyflows.md) ทดลองทีละเอกสารก่อนใช้จริง",
   "window_title": "Express",
   "group_by": "เลขที่ใบสำคัญจ่าย",
   "settings": {
@@ -14,13 +14,19 @@
   },
   "header": [
     {
+      "kind": "keys",
+      "value": "%a{ENTER}",
+      "note": "Alt+A เพิ่มเอกสารใหม่ แล้ว Enter ผ่านช่องแผนก"
+    },
+    {
       "kind": "field",
       "column": "เลขที่ใบสำคัญจ่าย",
       "format": {
         "type": "text"
       },
       "then": "{ENTER}",
-      "required": true
+      "required": true,
+      "note": "เลขที่ใบจ่ายเงิน"
     },
     {
       "kind": "field",
@@ -45,31 +51,14 @@
   ],
   "lines": [
     {
-      "kind": "field",
-      "column": "เลขที่ใบรับสินค้า",
-      "format": {
-        "type": "text"
-      },
-      "then": "{ENTER}",
-      "required": true,
-      "note": "เอกสารที่จ่ายชำระ"
-    },
-    {
-      "kind": "field",
-      "column": "ยอดจ่ายชำระ",
-      "format": {
-        "type": "number",
-        "decimals": 2,
-        "total": true
-      },
-      "then": "{ENTER}",
-      "required": true
+      "kind": "pause",
+      "value": "เลือกบิล {เลขที่ใบรับสินค้า} ยอดจ่าย {ยอดจ่ายชำระ} ในหน้าต่างเลือกบิลของ Express แล้วกด 'ทำต่อ'"
     }
   ],
   "footer": [
     {
       "kind": "pause",
-      "value": "เลือกวิธีจ่ายเงิน (เงินสด/เช็ค/โอน) ตรวจยอดแล้วกดบันทึกใน Express เอง จากนั้นกด 'ทำต่อ'"
+      "value": "กด F7 ใส่วิธีจ่ายเงิน ตรวจยอด แล้วบันทึกใน Express เอง จากนั้นกด 'ทำต่อ'"
     }
   ]
 }

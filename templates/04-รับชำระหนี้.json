@@ -1,8 +1,8 @@
 {
   "format": "ex-autokey-template",
   "version": 1,
-  "name": "รับชำระหนี้",
-  "description": "รับชำระหนี้ 1 ใบเสร็จตัดได้หลายใบกำกับ · ตัวอย่างเริ่มต้น: ลำดับช่องและปุ่มต้องปรับให้ตรงกับหน้าจอ Express ของคุณก่อนใช้งานจริง",
+  "name": "รับชำระหนี้ (RE)",
+  "description": "คีย์หัวใบเสร็จให้ แล้วหยุดให้เลือกบิลและวิธีรับเงินใน Express เอง · ลำดับปุ่มถอดจากคลิปตัวอย่าง (docs/express-keyflows.md) ทดลองทีละเอกสารก่อนใช้จริง",
   "window_title": "Express",
   "group_by": "เลขที่ใบเสร็จ",
   "settings": {
@@ -13,6 +13,11 @@
     "input_mode": "unicode"
   },
   "header": [
+    {
+      "kind": "keys",
+      "value": "%a{ENTER}",
+      "note": "Alt+A เพิ่มเอกสารใหม่ แล้ว Enter ผ่านช่องแผนก"
+    },
     {
       "kind": "field",
       "column": "เลขที่ใบเสร็จ",
@@ -45,31 +50,14 @@
   ],
   "lines": [
     {
-      "kind": "field",
-      "column": "เลขที่ใบกำกับ",
-      "format": {
-        "type": "text"
-      },
-      "then": "{ENTER}",
-      "required": true,
-      "note": "ใบกำกับที่รับชำระ"
-    },
-    {
-      "kind": "field",
-      "column": "ยอดรับชำระ",
-      "format": {
-        "type": "number",
-        "decimals": 2,
-        "total": true
-      },
-      "then": "{ENTER}",
-      "required": true
+      "kind": "pause",
+      "value": "เลือกบิล {เลขที่ใบกำกับ} ยอดรับชำระ {ยอดรับชำระ} ในหน้าต่างเลือกบิลของ Express แล้วกด 'ทำต่อ'"
     }
   ],
   "footer": [
     {
       "kind": "pause",
-      "value": "เลือกวิธีรับเงิน (เงินสด/เช็ค/โอน) ตรวจยอดแล้วกดบันทึกใน Express เอง จากนั้นกด 'ทำต่อ'"
+      "value": "กด F7 ใส่วิธีรับเงิน (เช่น S1 เงินโอนเข้าบัญชี) ตรวจยอด แล้วบันทึกใน Express เอง จากนั้นกด 'ทำต่อ'"
     }
   ]
 }
