@@ -1,0 +1,64 @@
+{
+  "format": "ex-autokey-template",
+  "version": 1,
+  "name": "จ่ายชำระหนี้ (PS)",
+  "description": "คีย์หัวใบจ่ายเงินให้ แล้วหยุดให้เลือกบิลและวิธีจ่ายเงินใน Express เอง · ลำดับปุ่มถอดจากคลิปตัวอย่าง (docs/express-keyflows.md) ทดลองทีละเอกสารก่อนใช้จริง",
+  "window_title": "Express",
+  "group_by": "เลขที่ใบสำคัญจ่าย",
+  "settings": {
+    "key_delay_ms": 30,
+    "step_delay_ms": 150,
+    "doc_delay_ms": 1000,
+    "start_delay_s": 3,
+    "input_mode": "unicode"
+  },
+  "header": [
+    {
+      "kind": "keys",
+      "value": "%a{ENTER}",
+      "note": "Alt+A เพิ่มเอกสารใหม่ แล้ว Enter ผ่านช่องแผนก"
+    },
+    {
+      "kind": "field",
+      "column": "เลขที่ใบสำคัญจ่าย",
+      "format": {
+        "type": "text"
+      },
+      "then": "{ENTER}",
+      "required": true,
+      "note": "เลขที่ใบจ่ายเงิน"
+    },
+    {
+      "kind": "field",
+      "column": "วันที่",
+      "format": {
+        "type": "date",
+        "pattern": "dd/mm/yy",
+        "era": "BE"
+      },
+      "then": "{ENTER}",
+      "required": true
+    },
+    {
+      "kind": "field",
+      "column": "รหัสผู้จำหน่าย",
+      "format": {
+        "type": "text"
+      },
+      "then": "{ENTER}",
+      "required": true
+    }
+  ],
+  "lines": [
+    {
+      "kind": "pause",
+      "value": "เลือกบิล {เลขที่ใบรับสินค้า} ยอดจ่าย {ยอดจ่ายชำระ} ในหน้าต่างเลือกบิลของ Express แล้วกด 'ทำต่อ'"
+    }
+  ],
+  "footer": [
+    {
+      "kind": "pause",
+      "value": "กด F7 ใส่วิธีจ่ายเงิน ตรวจยอด แล้วบันทึกใน Express เอง จากนั้นกด 'ทำต่อ'"
+    }
+  ]
+}

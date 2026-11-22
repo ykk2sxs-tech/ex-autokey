@@ -1,0 +1,63 @@
+{
+  "format": "ex-autokey-template",
+  "version": 1,
+  "name": "รับชำระหนี้ (RE)",
+  "description": "คีย์หัวใบเสร็จให้ แล้วหยุดให้เลือกบิลและวิธีรับเงินใน Express เอง · ลำดับปุ่มถอดจากคลิปตัวอย่าง (docs/express-keyflows.md) ทดลองทีละเอกสารก่อนใช้จริง",
+  "window_title": "Express",
+  "group_by": "เลขที่ใบเสร็จ",
+  "settings": {
+    "key_delay_ms": 30,
+    "step_delay_ms": 150,
+    "doc_delay_ms": 1000,
+    "start_delay_s": 3,
+    "input_mode": "unicode"
+  },
+  "header": [
+    {
+      "kind": "keys",
+      "value": "%a{ENTER}",
+      "note": "Alt+A เพิ่มเอกสารใหม่ แล้ว Enter ผ่านช่องแผนก"
+    },
+    {
+      "kind": "field",
+      "column": "เลขที่ใบเสร็จ",
+      "format": {
+        "type": "text"
+      },
+      "then": "{ENTER}",
+      "required": true
+    },
+    {
+      "kind": "field",
+      "column": "วันที่",
+      "format": {
+        "type": "date",
+        "pattern": "dd/mm/yy",
+        "era": "BE"
+      },
+      "then": "{ENTER}",
+      "required": true
+    },
+    {
+      "kind": "field",
+      "column": "รหัสลูกค้า",
+      "format": {
+        "type": "text"
+      },
+      "then": "{ENTER}",
+      "required": true
+    }
+  ],
+  "lines": [
+    {
+      "kind": "pause",
+      "value": "เลือกบิล {เลขที่ใบกำกับ} ยอดรับชำระ {ยอดรับชำระ} ในหน้าต่างเลือกบิลของ Express แล้วกด 'ทำต่อ'"
+    }
+  ],
+  "footer": [
+    {
+      "kind": "pause",
+      "value": "กด F7 ใส่วิธีรับเงิน (เช่น S1 เงินโอนเข้าบัญชี) ตรวจยอด แล้วบันทึกใน Express เอง จากนั้นกด 'ทำต่อ'"
+    }
+  ]
+}

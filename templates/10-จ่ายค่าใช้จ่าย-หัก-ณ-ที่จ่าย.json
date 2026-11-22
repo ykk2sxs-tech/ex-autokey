@@ -1,0 +1,166 @@
+{
+  "format": "ex-autokey-template",
+  "version": 1,
+  "name": "ค่าใช้จ่าย + หัก ณ ที่จ่าย (OE)",
+  "description": "บันทึกค่าใช้จ่ายอื่น (ไม่มี VAT) และภาษีหัก ณ ที่จ่าย เช่น ค่าบริการ 3% ค่าเช่า 5% ค่าโฆษณา 2% ค่าขนส่ง 1% · ลำดับปุ่มถอดจากคลิปตัวอย่าง (docs/express-keyflows.md) ทดลองทีละเอกสารก่อนใช้จริง",
+  "window_title": "Express",
+  "group_by": "เลขที่",
+  "settings": {
+    "key_delay_ms": 30,
+    "step_delay_ms": 150,
+    "doc_delay_ms": 1000,
+    "start_delay_s": 3,
+    "input_mode": "unicode"
+  },
+  "header": [
+    {
+      "kind": "keys",
+      "value": "%a{ENTER}",
+      "note": "Alt+A เพิ่มเอกสารใหม่ แล้ว Enter ผ่านช่องแผนก"
+    },
+    {
+      "kind": "field",
+      "column": "เลขที่",
+      "format": {
+        "type": "text"
+      },
+      "then": "{ENTER}",
+      "required": true,
+      "note": "เลขที่เอกสาร OE"
+    },
+    {
+      "kind": "field",
+      "column": "วันที่",
+      "format": {
+        "type": "date",
+        "pattern": "dd/mm/yy",
+        "era": "BE"
+      },
+      "then": "{ENTER}",
+      "required": true
+    },
+    {
+      "kind": "field",
+      "column": "รหัสผู้รับเงิน",
+      "format": {
+        "type": "text"
+      },
+      "then": "{ENTER 5}",
+      "required": true,
+      "note": "รหัสเจ้าหนี้ แล้ว Enter 5 ครั้ง: Bill be, สาขา, เลขที่บิล, ลวท. → คำอธิบาย"
+    },
+    {
+      "kind": "field",
+      "column": "คำอธิบาย",
+      "format": {
+        "type": "text"
+      },
+      "then": "{ENTER}"
+    },
+    {
+      "kind": "text",
+      "value": "0",
+      "then": "{ENTER 7}",
+      "note": "ประเภทราคา 0 = ไม่มี VAT (ถ้ามี VAT แก้เป็น 2) แล้ว Enter 7 ครั้ง: VAT ×2, ดอกเบี้ยจ่าย, เงินสด, ชำระโดยอื่นๆ, ส่วนลดเงินสด → ตารางรายการ"
+    }
+  ],
+  "lines": [
+    {
+      "kind": "field",
+      "column": "รหัสบัญชีค่าใช้จ่าย",
+      "format": {
+        "type": "text"
+      },
+      "then": "{ENTER}",
+      "required": true
+    },
+    {
+      "kind": "field",
+      "column": "รายละเอียด",
+      "format": {
+        "type": "text"
+      },
+      "before": "{HOME}+{END}",
+      "then": "{ENTER 2}",
+      "note": "เลือกข้อความเดิมแล้วพิมพ์ทับ (ว่าง = ใช้ชื่อบัญชีที่ Express ใส่ให้) แล้ว Enter 2 ครั้ง ผ่านแผนก → จำนวนเงิน"
+    },
+    {
+      "kind": "field",
+      "column": "จำนวนเงิน",
+      "format": {
+        "type": "number",
+        "decimals": 2,
+        "total": true
+      },
+      "then": "{ENTER}",
+      "required": true,
+      "note": "ยอดก่อนหักภาษี แล้ว Enter → บรรทัดถัดไป"
+    }
+  ],
+  "footer": [
+    {
+      "kind": "keys",
+      "value": "%a",
+      "note": "Alt+A เปิดหน้าต่างป้อนรายละเอียดภาษีหัก ณ ที่จ่าย"
+    },
+    {
+      "kind": "field",
+      "column": "เลขที่ใบหัก ณ ที่จ่าย",
+      "format": {
+        "type": "text"
+      },
+      "then": "{ENTER 12}",
+      "required": true,
+      "note": "เล่มที่/เลขที่ แล้ว Enter 12 ครั้ง ผ่านวันที่ออกหนังสือ, งวด, ข้อมูลผู้ถูกหัก → ประเภทเงินได้"
+    },
+    {
+      "kind": "field",
+      "column": "ประเภทเงินได้",
+      "format": {
+        "type": "text"
+      },
+      "before": "^{DEL}",
+      "then": "{ENTER}",
+      "required": true,
+      "note": "Ctrl+Delete ล้างค่าเดิมก่อนพิมพ์ ต้องตรงกับประเภทเงินได้ที่ตั้งไว้ใน Express"
+    },
+    {
+      "kind": "field",
+      "column": "เงินได้ที่หักภาษี",
+      "format": {
+        "type": "number",
+        "decimals": 2,
+        "total": true
+      },
+      "then": "{ENTER}",
+      "required": true,
+      "note": "จำนวนเงินที่จะคำนวณภาษี (รวมทุกรายการของเอกสาร)"
+    },
+    {
+      "kind": "field",
+      "column": "อัตราหัก ณ ที่จ่าย",
+      "format": {
+        "type": "number",
+        "decimals": null
+      },
+      "then": "{ENTER}",
+      "required": true,
+      "note": "อัตราภาษี (%)"
+    },
+    {
+      "kind": "text",
+      "value": "1",
+      "then": "",
+      "note": "เงื่อนไขการหักภาษี 1 = หักภาษี ณ ที่จ่าย"
+    },
+    {
+      "kind": "pause",
+      "value": "ตรวจหน้าต่างภาษีหัก ณ ที่จ่าย แล้วกด 'ตกลง' ใน Express เอง จากนั้นกด 'ทำต่อ' (โปรแกรมจะกด Esc เพื่อบันทึกเอกสาร)"
+    },
+    {
+      "kind": "keys",
+      "value": "{ESC}",
+      "note": "Esc ที่บรรทัดว่าง = จบรายการและบันทึกเอกสาร"
+    }
+  ]
+}

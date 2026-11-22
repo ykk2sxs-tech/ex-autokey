@@ -1,0 +1,104 @@
+{
+  "format": "ex-autokey-template",
+  "version": 1,
+  "name": "ขายเงินสด (HS)",
+  "description": "ขายเงินสด 1 เอกสารมีได้หลายรายการ (ใส่เลขที่ซ้ำทุกแถว) · ลำดับปุ่มถอดจากคลิปตัวอย่าง (docs/express-keyflows.md) ทดลองทีละเอกสารก่อนใช้จริง",
+  "window_title": "Express",
+  "group_by": "เลขที่",
+  "settings": {
+    "key_delay_ms": 30,
+    "step_delay_ms": 150,
+    "doc_delay_ms": 1000,
+    "start_delay_s": 3,
+    "input_mode": "unicode"
+  },
+  "header": [
+    {
+      "kind": "keys",
+      "value": "%a{ENTER}",
+      "note": "Alt+A เพิ่มเอกสารใหม่ แล้ว Enter ผ่านช่องแผนก"
+    },
+    {
+      "kind": "field",
+      "column": "เลขที่",
+      "format": {
+        "type": "text"
+      },
+      "then": "{ENTER}",
+      "required": true,
+      "note": "เลขที่บิลเงินสด"
+    },
+    {
+      "kind": "field",
+      "column": "วันที่",
+      "format": {
+        "type": "date",
+        "pattern": "dd/mm/yy",
+        "era": "BE"
+      },
+      "then": "{ENTER}",
+      "required": true
+    },
+    {
+      "kind": "field",
+      "column": "รหัสลูกค้า",
+      "format": {
+        "type": "text"
+      },
+      "then": "{ENTER 8}",
+      "required": true,
+      "note": "แล้ว Enter 8 ครั้ง: Bill to, สาขา, ใบสั่งขาย, อ้างอิง, พนักงานขาย, เขตการขาย, ขนส่งโดย → ประเภทราคา"
+    },
+    {
+      "kind": "text",
+      "value": "1",
+      "then": "{ENTER 7}",
+      "note": "ประเภทราคา 1 = รวม VAT ตามบทที่ 3 (ราคาไม่รวม VAT แก้เป็น 2) แล้ว Enter 7 ครั้ง: สถานที่ส่งของ, หักส่วนลด, หักเงินมัดจำ ×2, VAT ×2 → ตารางรายการ"
+    }
+  ],
+  "lines": [
+    {
+      "kind": "field",
+      "column": "รหัสสินค้า",
+      "format": {
+        "type": "text"
+      },
+      "then": "{ENTER 2}",
+      "required": true,
+      "note": "แล้ว Enter 2 ครั้ง ผ่านคลัง → จำนวน"
+    },
+    {
+      "kind": "field",
+      "column": "จำนวน",
+      "format": {
+        "type": "number",
+        "decimals": null,
+        "total": true
+      },
+      "then": "{ENTER}",
+      "required": true
+    },
+    {
+      "kind": "field",
+      "column": "ราคาต่อหน่วย",
+      "format": {
+        "type": "number",
+        "decimals": 2
+      },
+      "then": "{ENTER 3}",
+      "required": true,
+      "note": "แล้ว Enter 3 ครั้ง ผ่านส่วนลด, จำนวนเงิน → บรรทัดถัดไป"
+    }
+  ],
+  "footer": [
+    {
+      "kind": "pause",
+      "value": "ตรวจหน้าจอ Express ก่อนบันทึก แล้วกด 'ทำต่อ' (โปรแกรมจะกด Esc เพื่อบันทึก) ถ้าผิดให้กดหยุด แล้วแก้ใน Express เอง"
+    },
+    {
+      "kind": "keys",
+      "value": "{ESC}",
+      "note": "Esc ที่บรรทัดว่าง = จบรายการและบันทึกเอกสาร"
+    }
+  ]
+}

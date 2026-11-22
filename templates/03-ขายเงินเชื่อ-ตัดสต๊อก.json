@@ -1,0 +1,116 @@
+{
+  "format": "ex-autokey-template",
+  "version": 1,
+  "name": "ขายเงินเชื่อ ตัดสต๊อก (IV)",
+  "description": "ขายเงินเชื่อที่ระบุคลังสินค้าเพื่อตัดสต๊อก · ลำดับปุ่มถอดจากคลิปตัวอย่าง (docs/express-keyflows.md) ทดลองทีละเอกสารก่อนใช้จริง",
+  "window_title": "Express",
+  "group_by": "เลขที่",
+  "settings": {
+    "key_delay_ms": 30,
+    "step_delay_ms": 150,
+    "doc_delay_ms": 1000,
+    "start_delay_s": 3,
+    "input_mode": "unicode"
+  },
+  "header": [
+    {
+      "kind": "keys",
+      "value": "%a{ENTER}",
+      "note": "Alt+A เพิ่มเอกสารใหม่ แล้ว Enter ผ่านช่องแผนก"
+    },
+    {
+      "kind": "field",
+      "column": "เลขที่",
+      "format": {
+        "type": "text"
+      },
+      "then": "{ENTER}",
+      "required": true,
+      "note": "เลขที่ใบกำกับ"
+    },
+    {
+      "kind": "field",
+      "column": "วันที่",
+      "format": {
+        "type": "date",
+        "pattern": "dd/mm/yy",
+        "era": "BE"
+      },
+      "then": "{ENTER}",
+      "required": true
+    },
+    {
+      "kind": "field",
+      "column": "รหัสลูกค้า",
+      "format": {
+        "type": "text"
+      },
+      "then": "{ENTER 4}",
+      "required": true,
+      "note": "แล้ว Enter 4 ครั้ง: Bill to, สาขา, ใบสั่งขาย → อ้างอิง"
+    },
+    {
+      "kind": "field",
+      "column": "อ้างอิง",
+      "format": {
+        "type": "text"
+      },
+      "then": "{ENTER 13}",
+      "note": "แล้ว Enter 13 ครั้ง: เครดิต, ครบกำหนด, พนักงานขาย, เขตการขาย, ขนส่งโดย, ประเภทราคา, สถานที่ส่งของ, หักส่วนลด, หักเงินมัดจำ ×2, VAT ×2 → ตารางรายการ"
+    }
+  ],
+  "lines": [
+    {
+      "kind": "field",
+      "column": "รหัสสินค้า",
+      "format": {
+        "type": "text"
+      },
+      "then": "{ENTER}",
+      "required": true
+    },
+    {
+      "kind": "field",
+      "column": "คลัง",
+      "format": {
+        "type": "text"
+      },
+      "then": "{ENTER}",
+      "required": true,
+      "note": "รหัสคลังสินค้า"
+    },
+    {
+      "kind": "field",
+      "column": "จำนวน",
+      "format": {
+        "type": "number",
+        "decimals": null,
+        "total": true
+      },
+      "then": "{ENTER}",
+      "required": true
+    },
+    {
+      "kind": "field",
+      "column": "ราคาต่อหน่วย",
+      "format": {
+        "type": "number",
+        "decimals": 2
+      },
+      "then": "{ENTER 2}",
+      "required": true,
+      "note": "แล้ว Enter 2 ครั้ง ผ่านส่วนลด → บรรทัดถัดไป"
+    }
+  ],
+  "footer": [
+    {
+      "kind": "pause",
+      "value": "ตรวจหน้าจอ Express ก่อนบันทึก แล้วกด 'ทำต่อ' (โปรแกรมจะกด Esc เพื่อบันทึก) ถ้าผิดให้กดหยุด แล้วแก้ใน Express เอง"
+    },
+    {
+      "kind": "keys",
+      "value": "{ESC}",
+      "note": "Esc ที่บรรทัดว่าง = จบรายการและบันทึกเอกสาร"
+    }
+  ]
+}
